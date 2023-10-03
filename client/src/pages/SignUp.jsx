@@ -47,7 +47,7 @@ export default function SignUp() {
       navigate('/sign-in');
     } catch (error) {
       setLoading(false);
-      notifyError("Sign up failed");
+      notifyError(error);
     }
   };
 
