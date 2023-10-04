@@ -6,20 +6,21 @@ import Profile from "./pages/Profile";
 import SignIn from "./pages/SignIn";
 import Header from "./components/Header";
 import SignUp from "./pages/SignUp";
-import { ToastContainer } from "react-toastify";
+import PrivateRoute from "./components/PrivateRoute";
 
 export default function App() {
   return (
     <BrowserRouter>
-    <Header />
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/about" element={<About />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/profile" element={<Profile />} />
+        </Route>
       </Routes>
-      <ToastContainer />
     </BrowserRouter>
   );
 }
