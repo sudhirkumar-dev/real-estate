@@ -21,6 +21,7 @@ import {
   updateUserStart,
   updateuserSuccess,
 } from "../redux/user/userSlice";
+import { Link } from "react-router-dom";
 
 export default function Profile() {
   const { currentUser, loading, error } = useSelector((state) => state.user);
@@ -107,20 +108,20 @@ export default function Profile() {
     }
   };
 
-  const handleSignOut = async ()=>{
+  const handleSignOut = async () => {
     try {
-      dispatch(signOutUserStart())
-      const res = await fetch('/api/auth/signout');
+      dispatch(signOutUserStart());
+      const res = await fetch("/api/auth/signout");
       const data = await res.json();
-      if(data.success === false) {
-        dispatch(signOutUserFailure(data.message))
-        return
+      if (data.success === false) {
+        dispatch(signOutUserFailure(data.message));
+        return;
       }
-      dispatch(signOutUserSuccess(data))
+      dispatch(signOutUserSuccess(data));
     } catch (error) {
-      dispatch(signOutUserFailure(error.message))
+      dispatch(signOutUserFailure(error.message));
     }
-  }
+  };
 
   return (
     <div className="p-3 max-w-lg mx-auto">
@@ -175,9 +176,18 @@ export default function Profile() {
           id="password"
           onChange={handleChange}
         />
-        <button className="bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80">
+        <button
+          className="bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80"
+          disabled={loading}
+        >
           {loading ? "Loading..." : "Update"}
         </button>
+        <Link
+        className="bg-green-700 text-white p-3 rounded-lg uppercase text-center hover:opacity-95"
+          to={"/create-listing"}
+        >
+          Create Listing
+        </Link>
       </form>
       <div className="flex justify-between mt-5">
         <span
@@ -186,7 +196,9 @@ export default function Profile() {
         >
           Delete Account
         </span>
-        <span className="text-red-700 cursor-pointer" onClick={handleSignOut}>Sign Out</span>
+        <span className="text-red-700 cursor-pointer" onClick={handleSignOut}>
+          Sign Out
+        </span>
       </div>
       <p className="text-red-700 mt-5">{error ? error : ""}</p>
       <p className="text-green-700 mt-5">
